@@ -1,0 +1,6 @@
+*
+!*.*
+*.o
+.clang-tidy
+.clang-format
+.vscode
