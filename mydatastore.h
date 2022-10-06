@@ -30,13 +30,22 @@ public:
      * Reproduce the database file from the current Products and User values
      */
     void dump(std::ostream& ofile);
+
+    // Add the given product to the cart for the matching username
+    void addToCart(std::string username, Product* p);
+
+    void viewCart(std::string username);
+
+    void buyCart(std::string username);
 private:
     // Stores each distinct product once
     std::vector<Product*> products_;
     // Stores a mapping of individual keywords, and all products with that keyword
     std::map<std::string, std::vector<Product*>> productsTerms_;
+
     std::vector<User*> users_;
-    std::map<std::string, std::queue<Product*>> usersCarts_;
+    // Add the given product to the cart for the matching username
+    std::map<std::string, std::vector<Product*>> usersCarts_;
 };
 
 #endif

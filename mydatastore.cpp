@@ -34,7 +34,7 @@ void MyDataStore::addProduct(Product* p) {
 //Adds a user to the data store
 void MyDataStore::addUser(User* u) {
     users_.push_back(u);
-    std::pair<std::string, std::queue<Product*>> toInsert = std::make_pair(u->getName(), std::queue<Product*>());
+    std::pair<std::string, std::vector<Product*>> toInsert = std::make_pair(u->getName(), std::vector<Product*>());
     usersCarts_.insert(toInsert);
 }
 
@@ -99,4 +99,45 @@ void MyDataStore::dump(std::ostream& ofile) {
         users_[i]->dump(ofile);
     }
     ofile << "<\\users>" << "\n";
+}
+
+// Add the given product to the cart for the matching username
+void MyDataStore::addToCart(std::string username, Product* p) {
+    std::map<std::string, std::vector<Product*>>::iterator user = usersCarts_.find(username);
+    if (user == usersCarts_.end()) {
+        std::cout << "Invalid request" << std::endl;
+        return;
+    }
+    user->second.push_back(p);
+}
+
+void MyDataStore::viewCart(std::string username) {
+    std::map<std::string, std::vector<Product*>>::iterator user = usersCarts_.find(username);
+    if (user == usersCarts_.end()) {
+        std::cout << "Invalid request" << std::endl;
+        return;
+    }
+    for (unsigned int i = 0; i<user->second.size(); i++) {
+        std::cout << user->second[i]->displayString();
+    }
+}
+
+void MyDataStore::buyCart(std::string username) {
+    std::map<std::string, std::vector<Product*>>::iterator user = usersCarts_.find(username);
+    if (user == usersCarts_.end()) {
+        std::cout << "Invalid request" << std::endl;
+        return;
+    }
+    User* userPointer;
+    for (unsigned int i = 0; i<users_.size(); i++) {
+        if (users_[i]->getName() == username) userPointer = users_[i];
+    }
+    for (unsigned int i = 0; i<user->second.size(); i++) {
+        if (userPointer->getBalance() >= user->second[i]->getPrice() && user->second[i]->getQty() > 0) {
+            userPointer->deductAmount(user->second[i]->getPrice());
+            user->second[i]->subtractQty(1);
+            user->second.erase(user->second.begin() + i);
+            i--;
+        }
+    }
 }

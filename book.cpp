@@ -28,7 +28,7 @@ std::string Book::displayString() const {
     else price += std::to_string(int(price_*100)%100);
 
     display += price + " " + std::to_string(qty_) + " left.";
-
+    display += "\n";
     return display;
 }
 
