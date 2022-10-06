@@ -8,7 +8,9 @@ Book::Book(const std::string category, const std::string name, double price, int
 
 // Return all searchable keywords of the object, for indexing
 std::set<std::string> Book::keywords() const {
-    std::set<std::string> results = parseStringToWords(author_);
+    std::set<std::string> name = parseStringToWords(name_);
+    std::set<std::string> author = parseStringToWords(author_);
+    std::set<std::string> results = setUnion(name, author);
     results.insert(isbn_);
     return results;
 }

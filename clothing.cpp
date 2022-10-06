@@ -8,7 +8,10 @@ Clothing::Clothing(const std::string category, const std::string name, double pr
 
 // Return all searchable keywords of the object, for indexing
 std::set<std::string> Clothing::keywords() const {
-    return parseStringToWords(brand_);
+    std::set<std::string> name = parseStringToWords(name_);
+    std::set<std::string> brand = parseStringToWords(brand_);
+    std::set<std::string> results = setUnion(name, brand);
+    return results;
 }
 
 // Output all info about the object in the user interface format

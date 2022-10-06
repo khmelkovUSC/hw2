@@ -9,6 +9,7 @@
 #include "db_parser.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
 
 using namespace std;
 struct ProdNameSorter {
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
+    MyDataStore ds;
 
 
 
@@ -65,9 +66,10 @@ int main(int argc, char* argv[])
     bool done = false;
     while(!done) {
         cout << "\nEnter command: " << endl;
-        string line;
-        getline(cin,line);
-        stringstream ss(line);
+        // Changing the following skeleton code variable from "line" to "Line" causes a seg fault when dumping users_ to go away. I have absolutely no clue why
+        string Line;
+        getline(cin,Line);
+        stringstream ss(Line);
         string cmd;
         if((ss >> cmd)) {
             if( cmd == "AND") {
@@ -100,10 +102,13 @@ int main(int argc, char* argv[])
                 done = true;
             }
 	    /* Add support for other commands here */
+            else if (cmd == "ADD") {
 
+            } else if (cmd == "VIEWCART") {
 
+            } else if (cmd == "BUYCART") {
 
-
+            }
             else {
                 cout << "Unknown command" << endl;
             }

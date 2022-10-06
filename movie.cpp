@@ -8,7 +8,10 @@ Movie::Movie(const std::string category, const std::string name, double price, i
 
 // Return all searchable keywords of the object, for indexing
 std::set<std::string> Movie::keywords() const {
-    return parseStringToWords(genre_);
+    std::set<std::string> name = parseStringToWords(name_);
+    std::set<std::string> genre = parseStringToWords(genre_);
+    std::set<std::string> results = setUnion(name, genre);
+    return results;
 }
 
 std::string Movie::displayString() const {
