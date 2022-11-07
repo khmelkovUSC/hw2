@@ -34,5 +34,9 @@ void User::deductAmount(double amt)
 
 void User::dump(std::ostream& os)
 {
-    os << name_ << " "  << balance_ << " " << type_ << endl;
+    std::string bal = std::to_string(int(balance_)) + ".";
+    if (int(balance_*1000+0.001)%10 >= 5) bal += std::to_string((int(balance_*100+0.001)%100 + 1));
+    else if (int(balance_*100+0.001)%100 == 0) bal += "00";
+    else bal += std::to_string(int(balance_*100+0.001)%100);
+    os << name_ << " "  << bal << " " << type_ << endl;
 }

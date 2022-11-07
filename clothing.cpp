@@ -23,8 +23,8 @@ std::string Clothing::displayString() const {
     display += "\n";
     // Round off the price to 2 decimal points
     std::string price = std::to_string(int(price_)) + ".";
-    if (int(price_*1000)%10 >= 5) price += std::to_string((int(price_*100)%100 + 1));
-    else price += std::to_string(int(price_*100)%100);
+    if (int(price_*1000+0.001)%10 >= 5) price += std::to_string((int(price_*100+0.001)%100 + 1));
+    else price += std::to_string(int(price_*100+0.001)%100);
 
     display += price + " " + std::to_string(qty_) + " left.";
     display += "\n";

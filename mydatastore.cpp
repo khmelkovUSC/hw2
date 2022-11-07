@@ -93,12 +93,12 @@ void MyDataStore::dump(std::ostream& ofile) {
     for (unsigned int i = 0; i<products_.size(); i++) {
         products_[i]->dump(ofile);
     }
-    ofile << "<\\products>" << "\n";
+    ofile << "</products>" << "\n";
     ofile << "<users>" << "\n";
     for (unsigned int i = 0; i<users_.size(); i++) {
         users_[i]->dump(ofile);
     }
-    ofile << "<\\users>" << "\n";
+    ofile << "</users>" << "\n";
 }
 
 // Add the given product to the cart for the matching username
@@ -114,10 +114,11 @@ void MyDataStore::addToCart(std::string username, Product* p) {
 void MyDataStore::viewCart(std::string username) {
     std::map<std::string, std::vector<Product*>>::iterator user = usersCarts_.find(username);
     if (user == usersCarts_.end()) {
-        std::cout << "Invalid request" << std::endl;
+        std::cout << "Invalid username" << std::endl;
         return;
     }
     for (unsigned int i = 0; i<user->second.size(); i++) {
+        std::cout << "Item " << i+1 << std::endl;
         std::cout << user->second[i]->displayString();
     }
 }
@@ -125,7 +126,7 @@ void MyDataStore::viewCart(std::string username) {
 void MyDataStore::buyCart(std::string username) {
     std::map<std::string, std::vector<Product*>>::iterator user = usersCarts_.find(username);
     if (user == usersCarts_.end()) {
-        std::cout << "Invalid request" << std::endl;
+        std::cout << "Invalid username" << std::endl;
         return;
     }
     User* userPointer;
